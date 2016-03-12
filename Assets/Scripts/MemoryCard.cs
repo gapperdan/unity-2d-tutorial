@@ -4,6 +4,8 @@ using System.Collections;
 public class MemoryCard : MonoBehaviour {
 	[SerializeField] private GameObject cardBack;
 	[SerializeField] private SceneController controller;
+	[SerializeField] private AudioSource soundSource;
+	[SerializeField] private AudioClip cardFlipSound;
 
 	private int _id;
 	public int id {
@@ -17,6 +19,7 @@ public class MemoryCard : MonoBehaviour {
 
 	public void OnMouseDown() {
 		if (cardBack.activeSelf && controller.canReveal) {
+			soundSource.PlayOneShot (cardFlipSound);
 			cardBack.SetActive(false);
 			controller.CardRevealed (this);
 		}
