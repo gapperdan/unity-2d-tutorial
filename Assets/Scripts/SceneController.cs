@@ -13,12 +13,14 @@ public class SceneController : MonoBehaviour
 	private MemoryCard _secondRevealed;
 
 	private int _score = 0;
-	private float _elapsedTime;
+	private float _elapsedTime = 0.00f;
+	private float _bestTime = 0.00f;
 
 	[SerializeField] private MemoryCard originalCard;
 	[SerializeField] private Sprite[] images;
 	[SerializeField] private TextMesh scoreLabel;
 	[SerializeField] private TextMesh elapsedTimeLabel;
+	[SerializeField] private TextMesh bestTimeLabel;
 
 	public bool canReveal {
 		get {return _secondRevealed == null;}
@@ -86,6 +88,10 @@ public class SceneController : MonoBehaviour
 			scoreLabel.text = "Score: " + _score;
 			if (_score == 4) {
 				scoreLabel.text = VICTORY_TEXT;
+				if (_elapsedTime > _bestTime) {
+					_bestTime = _elapsedTime;
+				}
+				bestTimeLabel.text = "Best Time: " + _bestTime.ToString("0.00");
 				StopCoroutine ("ShowElapsedTime");
 			}
 		}
