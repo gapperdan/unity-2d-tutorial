@@ -58,6 +58,11 @@ public class SceneController : MonoBehaviour
 	}		
 
 	void Update() {
+		if (Input.GetKey("escape")){
+			StopAllCoroutines ();
+			Application.Quit ();
+		}
+
 		if (_score != 4) {
 			_elapsedTime = Time.timeSinceLevelLoad;
 			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
