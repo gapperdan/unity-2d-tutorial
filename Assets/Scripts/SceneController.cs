@@ -15,6 +15,7 @@ public class SceneController : MonoBehaviour
 
 	[SerializeField] private MemoryCard originalCard;
 	[SerializeField] private Sprite[] images;
+	[SerializeField] private TextMesh scoreLabel;
 
 	public bool canReveal {
 		get {return _secondRevealed == null;}
@@ -70,7 +71,10 @@ public class SceneController : MonoBehaviour
 	private IEnumerator CheckMatch() {
 		if (_firstRevealed.id == _secondRevealed.id) {
 			_score++;
-			Debug.Log("Score: " + _score);
+			scoreLabel.text = "Score: " + _score;
+			if (_score == 4) {
+				scoreLabel.text = "Victory!";
+			}
 		}
 		else {
 			yield return new WaitForSeconds(.5f);
