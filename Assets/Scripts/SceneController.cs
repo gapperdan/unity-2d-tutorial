@@ -9,6 +9,7 @@ public class SceneController : MonoBehaviour
 	public const float offsetX = 2f;
 	public const float offsetY = 2.5f;
 	public const string VICTORY_TEXT = "Fus Ro Dah!";
+	public const int VICTORY_POINTS = 4;
 
 	private MemoryCard _firstRevealed;
 	private MemoryCard _secondRevealed;
@@ -22,6 +23,10 @@ public class SceneController : MonoBehaviour
 	[SerializeField] private TextMesh scoreLabel;
 	[SerializeField] private TextMesh elapsedTimeLabel;
 	[SerializeField] private TextMesh bestTimeLabel;
+
+	public bool isVictoryAchieved {
+		get {return _score >= VICTORY_POINTS;}
+	}
 
 	public bool canReveal {
 		get {return _secondRevealed == null;}
@@ -63,7 +68,7 @@ public class SceneController : MonoBehaviour
 			Application.Quit ();
 		}
 				
-		if (_score != 4) {
+		if (!isVictoryAchieved) {
 			_elapsedTime += Time.deltaTime;
 			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
 		}
