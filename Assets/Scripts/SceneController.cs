@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class SceneController : MonoBehaviour
 	}
 
 	public void Restart() {		
-		Application.LoadLevel ("main-scene");
+		SceneManager.LoadScene ("main-scene");
 	}
 
 }
