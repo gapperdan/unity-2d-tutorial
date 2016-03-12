@@ -23,6 +23,10 @@ public class SceneController : MonoBehaviour
 	[SerializeField] private TextMesh scoreLabel;
 	[SerializeField] private TextMesh elapsedTimeLabel;
 	[SerializeField] private TextMesh bestTimeLabel;
+	[SerializeField] private AudioSource soundSource;
+	[SerializeField] private AudioClip cardMatchSound;
+	[SerializeField] private AudioClip cardMismatchSound;
+	[SerializeField] private AudioClip victorySound;
 
 	public bool isVictoryAchieved {
 		get {return _score >= VICTORY_POINTS;}
@@ -71,7 +75,7 @@ public class SceneController : MonoBehaviour
 		if (!isVictoryAchieved) {
 			_elapsedTime += Time.deltaTime;
 			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
-		}
+		} 
 	}
 
 	private int[] ShuffleArray (int[] numbers)
@@ -98,6 +102,7 @@ public class SceneController : MonoBehaviour
 	private IEnumerator CheckMatch() {
 		if (_firstRevealed.id == _secondRevealed.id) {
 			_score++;
+			soundSource.PlayOneShot (cardMatchSound);
 			scoreLabel.text = "Score: " + _score;
 			if (_score == 4) {
 				scoreLabel.text = VICTORY_TEXT;
@@ -110,6 +115,7 @@ public class SceneController : MonoBehaviour
 			}
 		}
 		else {
+			soundSource.PlayOneShot (cardMismatchSound);
 			yield return new WaitForSeconds(.5f);
 			_firstRevealed.Unreveal();
 			_secondRevealed.Unreveal();
