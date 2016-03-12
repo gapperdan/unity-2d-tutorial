@@ -5,6 +5,9 @@ public class UIButton : MonoBehaviour {
 
 	[SerializeField] private GameObject targetObject;
 	[SerializeField] private string targetMessage;
+	[SerializeField] private AudioSource soundSource;
+	[SerializeField] private AudioClip startSound;
+
 	public Color highlightColor = Color.cyan;
 
 	public void OnMouseEnter() {
@@ -27,6 +30,7 @@ public class UIButton : MonoBehaviour {
 
 	public void OnMouseUp(){
 		transform.localScale = Vector3.one;
+		soundSource.PlayOneShot (startSound);
 		if (targetObject != null) {
 			targetObject.SendMessage(targetMessage);
 		}

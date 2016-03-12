@@ -26,7 +26,6 @@ public class SceneController : MonoBehaviour
 	[SerializeField] private AudioSource soundSource;
 	[SerializeField] private AudioClip cardMatchSound;
 	[SerializeField] private AudioClip cardMismatchSound;
-	[SerializeField] private AudioClip victorySound;
 
 	public bool isVictoryAchieved {
 		get {return _score >= VICTORY_POINTS;}
@@ -124,7 +123,7 @@ public class SceneController : MonoBehaviour
 		_secondRevealed = null;
 	}
 
-	public void Restart() {			
+	public void Restart() {		
 		SceneManager.LoadScene ("main-scene");
 	}
 
