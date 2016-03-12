@@ -55,7 +55,6 @@ public class SceneController : MonoBehaviour
 		_bestTime = PlayerPrefs.GetFloat("Best Time");
 		bestTimeLabel.text = "Best Time: " + _bestTime.ToString("0.00");
 		_elapsedTime = 0.00f;
-		StartCoroutine ("ShowElapsedTime");
 	}		
 
 	void Update() {
@@ -63,9 +62,9 @@ public class SceneController : MonoBehaviour
 			StopAllCoroutines ();
 			Application.Quit ();
 		}
-
+				
 		if (_score != 4) {
-			_elapsedTime = Time.timeSinceLevelLoad;
+			_elapsedTime += Time.deltaTime;
 			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
 		}
 	}
@@ -114,11 +113,7 @@ public class SceneController : MonoBehaviour
 		_secondRevealed = null;
 	}
 
-	private void ShowElapsedTime() {
-		_elapsedTime = Time.timeSinceLevelLoad;
-	}
-
-	public void Restart() {		
+	public void Restart() {			
 		SceneManager.LoadScene ("main-scene");
 	}
 
