@@ -14,7 +14,7 @@ public class SceneController : MonoBehaviour
 
 	private int _score = 0;
 	private float _elapsedTime = 0.00f;
-	private float _bestTime = 0.00f;
+	private static float _bestTime = 0.00f;
 
 	[SerializeField] private MemoryCard originalCard;
 	[SerializeField] private Sprite[] images;
@@ -51,12 +51,15 @@ public class SceneController : MonoBehaviour
 			}
 		}
 
+		_bestTime = PlayerPrefs.GetFloat("Best Time");
+		bestTimeLabel.text = "Best Time: " + _bestTime.ToString("0.00");
+		_elapsedTime = 0.00f;
 		StartCoroutine ("ShowElapsedTime");
 	}		
 
 	void Update() {
 		if (_score != 4) {
-			_elapsedTime = Time.time;
+			_elapsedTime = Time.timeSinceLevelLoad;
 			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
 		}
 	}
@@ -88,10 +91,11 @@ public class SceneController : MonoBehaviour
 			scoreLabel.text = "Score: " + _score;
 			if (_score == 4) {
 				scoreLabel.text = VICTORY_TEXT;
-				if (_elapsedTime > _bestTime) {
+				if (_elapsedTime < _bestTime) {
 					_bestTime = _elapsedTime;
 				}
 				bestTimeLabel.text = "Best Time: " + _bestTime.ToString("0.00");
+				PlayerPrefs.SetFloat("Best Time", _bestTime);
 				StopCoroutine ("ShowElapsedTime");
 			}
 		}
@@ -105,7 +109,11 @@ public class SceneController : MonoBehaviour
 	}
 
 	private void ShowElapsedTime() {
-		_elapsedTime = Time.time;
+		_elapsedTime = Time.timeSinceLevelLoad;
+	}
+
+	public void Restart() {		
+		Application.LoadLevel ("main-scene");
 	}
 
 }
