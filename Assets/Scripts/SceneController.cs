@@ -7,15 +7,18 @@ public class SceneController : MonoBehaviour
 	public const int gridCols = 4;
 	public const float offsetX = 2f;
 	public const float offsetY = 2.5f;
+	public const string VICTORY_TEXT = "Fus Ro Dah!";
 
 	private MemoryCard _firstRevealed;
 	private MemoryCard _secondRevealed;
 
 	private int _score = 0;
+	private float _elapsedTime;
 
 	[SerializeField] private MemoryCard originalCard;
 	[SerializeField] private Sprite[] images;
 	[SerializeField] private TextMesh scoreLabel;
+	[SerializeField] private TextMesh elapsedTimeLabel;
 
 	public bool canReveal {
 		get {return _secondRevealed == null;}
@@ -45,6 +48,15 @@ public class SceneController : MonoBehaviour
 				card.transform.position = new Vector3 (posX, posY, startPos.z);
 			}
 		}
+
+		StartCoroutine ("ShowElapsedTime");
+	}		
+
+	void Update() {
+		if (_score != 4) {
+			_elapsedTime = Time.time;
+			elapsedTimeLabel.text = _elapsedTime.ToString ("0.00");
+		}
 	}
 
 	private int[] ShuffleArray (int[] numbers)
@@ -73,7 +85,8 @@ public class SceneController : MonoBehaviour
 			_score++;
 			scoreLabel.text = "Score: " + _score;
 			if (_score == 4) {
-				scoreLabel.text = "Victory!";
+				scoreLabel.text = VICTORY_TEXT;
+				StopCoroutine ("ShowElapsedTime");
 			}
 		}
 		else {
@@ -84,4 +97,9 @@ public class SceneController : MonoBehaviour
 		_firstRevealed = null;
 		_secondRevealed = null;
 	}
+
+	private void ShowElapsedTime() {
+		_elapsedTime = Time.time;
+	}
+
 }
